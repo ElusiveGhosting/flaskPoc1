@@ -6,12 +6,12 @@ jobs:
       - image: circleci/postgres:9.4
     environment:
       - PYTHONPATH: src:test
-      - APPLICATION_POSTGRES_USER: postgres
-      - APPLICATION_POSTGRES_PASSWORD: password
-      - APPLICATION_POSTGRES_HOST: 127.0.0.1
-      - APPLICATION_POSTGRES_PORT: 5432
-      - APPLICATION_POSTGRES_HOST_AUTH_METHOD: trust
-      - APPLICATION_POSTGRES_NAME: application
+      - POSTGRES_USER: postgres
+      - POSTGRES_PASSWORD: password
+      - POSTGRES_HOST: 127.0.0.1
+      - POSTGRES_PORT: 5432
+      - POSTGRES_HOST_AUTH_METHOD: trust
+      - POSTGRES_NAME: postgres
       - DEBUG_MODE: "True"
     steps:
       - checkout
