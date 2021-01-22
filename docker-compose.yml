@@ -24,6 +24,8 @@ services:
       - dbdata
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
 
   testserver:
     env_file: .env
@@ -39,9 +41,13 @@ services:
       APPLICATION_PORT: 5053
       APPLICATION_DB_CONTAINER: testdb
       POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     command: python -m pytest test/
 
   testdb:
     image: postgres:9.4
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
