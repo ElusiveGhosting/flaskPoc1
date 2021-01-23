@@ -1,6 +1,7 @@
 """ Defines the learning history repository """
 import json
 from models import Learning_history
+from flask import jsonify
 
 
 class Learning_historyRepository:
@@ -9,7 +10,12 @@ class Learning_historyRepository:
     @staticmethod
     def get(id):
         """ Query a user by id"""
-        learner = Learning_history.query.filter_by(studentid=id).first()
-        print(learner)
-        learner= dict(studentid=learner.studentid,date=learner.date,age=learner.age,learninghours=learner.learninghours,cpuusage=learner.cpuusage,cost=learner.cost,courseid=learner.courseid,noofmoudles=learner.noofmoudles,maxnoofsubmission=learner.maxnoofsubmission,batchid=learner.batchid)
-        return learner
+        l=[]
+        learners = Learning_history.query.all()
+        for learner in learners:
+            print(learner)
+            temp= dict(studentid=learner.studentid,date=learner.date,age=learner.age,learninghours=learner.learninghours,cpuusage=learner.cpuusage,cost=learner.cost,courseid=learner.courseid,noofmoudles=learner.noofmoudles,maxnoofsubmission=learner.maxnoofsubmission,batchid=learner.batchid)
+            print(temp)
+            l.append(temp)
+        print(l)
+        return l
