@@ -1,4 +1,5 @@
 """
+"""
 Define the REST verbs relative to the learning history
 """
 
@@ -19,4 +20,4 @@ class Learning_historyResource(Resource):
         """ Return an learner key information based on his id """
         print('inside resource')
         learner = Learning_historyRepository.get(id=id)
-        return jsonify({"learner": learner})
+        return jsonify(learner)
