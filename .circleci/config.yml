@@ -1,65 +1,65 @@
-version: 2
+version: 2.1
 jobs:
   build:
-    docker:
-      - image: circleci/python:3.7
-      - image: circleci/postgres:9.4
-    environment:
-      - PYTHONPATH: src:server
-      - POSTGRES_USER: postgres
-      - POSTGRES_PASSWORD: password
-      - POSTGRES_HOST: 127.0.0.1
-      - POSTGRES_PORT: 5432
-      - POSTGRES_HOST_AUTH_METHOD: trust
-      - POSTGRES_NAME: postgres
-      - DEBUG_MODE: "True"
+    machine:
+      image: 'ubuntu-2004:202010-01'
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - venv-{{ checksum "requirements-dev.txt" }}-{{ checksum "requirements.txt" }}
+      - run: |
+
+      git clone https://github.com/RohithVikramathithan/flaskPoc1 flaskPoc1
+      cd flaskPoc1
+      echo "hello from ubuntu"
+      docker-compose run --rm server pip install -r requirements-dev.txt --user --upgrade --no-warn-script-location
+      docker-compose up server
       - run:
-          name: Install Python requirements
+          name: Install linux support apps
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements-dev.txt
-      - save_cache:
-          key: venv-{{ checksum "requirements-dev.txt" }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "venv"
+            sudo apt-get install docker
+            sudo apt-get install make
+            sudo apt-get install gitt
       - run:
-          name: Install dockerize
-          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-          environment:
-            DOCKERIZE_VERSION: v0.6.0
-      - run:
-          name: Wait for database
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run:
-          name: Run Flake8
+          name: clone repo
           command: |
-            . venv/bin/activate
-            flake8 src test
+            git clone https://github.com/RohithVikramathithan/flaskPoc1 flaskPoc1
       - run:
-          name: Run tests
+          name: change dir and test
           command: |
-            . venv/bin/activate
-            python -m pytest --junitxml=test-reports/report.xml --cov-report term --cov-config setup.cfg --cov=src/ test/
-      - store_test_results:
-          path: test-reports
+            cd flaskPoc1
+            echo "hello from ubuntu"
       - run:
-          name: Check for dependencies with known vulnerabilities
+          name: install server
           command: |
-            . venv/bin/activate
-            safety check
+            docker-compose run --rm server pip install -r requirements-dev.txt --user --upgrade --no-warn-script-location
       - run:
-          name: Check for files not formatted using Black
+          name: connect to db
           command: |
-            . venv/bin/activate
-            black --check src/ --exclude vendor/
+            docker-compose exec db psql -Upostgres
       - run:
-          name: Check for files without correct import order
+          name: connect to postgresdb
           command: |
-            . venv/bin/activate
-            isort -rc src/ test/ --skip vendor/ --skip src/models/__init__.py --check-only
+            \c postgres      
+      - run:
+          name: add table
+          command: |
+            CREATE TABLE learning_history(studentId INT NOT NULL,date timestamp,age INT,learninghours INT,cpuusage INT,cost  INT,courseId text,noOfmoudles INT,maxNoOfSubmission INT,batchId text );
+      - run:
+          name: add data
+          command: |
+            insert into learning_history( studentId ,date, age ,learninghours ,cpuusage ,cost ,courseId ,noOfmoudles ,maxNoOfSubmission ,batchId ) values (123,CURRENT_DATE,22,6,50,400,'SCIFI01',6,10,'PY101');
+            insert into learning_history( studentId ,date, age ,learninghours ,cpuusage ,cost ,courseId ,noOfmoudles ,maxNoOfSubmission ,batchId ) values (123,CURRENT_DATE,22,6,50,400,'SCIFI02',6,10,'PY101');
+            insert into learning_history( studentId ,date, age ,learninghours ,cpuusage ,cost ,courseId ,noOfmoudles ,maxNoOfSubmission ,batchId ) values (123,CURRENT_DATE,22,6,50,400,'SCIFI03',6,10,'PY101');
+            insert into learning_history( studentId ,date, age ,learninghours ,cpuusage ,cost ,courseId ,noOfmoudles ,maxNoOfSubmission ,batchId ) values (123,CURRENT_DATE,22,6,50,400,'SCIFI04',6,10,'PY101');
+      - run:
+          name: close db connection
+          command: |
+            ##############
+      - run:
+          name: start server
+          command: |
+            docker-compose up server
+      - run:
+          name: stop server
+          command: |
+            ###############
+            
