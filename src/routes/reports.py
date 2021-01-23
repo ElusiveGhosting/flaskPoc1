@@ -1,9 +1,9 @@
 from flask import Blueprint
 from flask_restful import Api
 
-from resources import Learning_historyResource
+from resources import Reports_Resource
 
-LEARNER_BLUEPRINT = Blueprint("learner", __name__)
-Api(LEARNER_BLUEPRINT).add_resource(
-    Learning_historyResource, "/learner/<int:id>"
+REPORTS_BLUEPRINT = Blueprint("report", __name__)
+Api(REPORTS_BLUEPRINT).add_resource(
+    Reports_Resource, "/report"
 )
