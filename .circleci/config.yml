@@ -5,61 +5,10 @@ jobs:
       image: 'ubuntu-2004:202010-01'
     steps:
       - checkout
-      - run: |
-
-      git clone https://github.com/RohithVikramathithan/flaskPoc1 flaskPoc1
-      cd flaskPoc1
-      echo "hello from ubuntu"
-      docker-compose run --rm server pip install -r requirements-dev.txt --user --upgrade --no-warn-script-location
-      docker-compose up server
       - run:
           name: Install linux support apps
           command: |
             sudo apt-get install docker
             sudo apt-get install make
-            sudo apt-get install gitt
-      - run:
-          name: clone repo
-          command: |
-            git clone https://github.com/RohithVikramathithan/flaskPoc1 flaskPoc1
-      - run:
-          name: change dir and test
-          command: |
-            cd flaskPoc1
-            echo "hello from ubuntu"
-      - run:
-          name: install server
-          command: |
-            docker-compose run --rm server pip install -r requirements-dev.txt --user --upgrade --no-warn-script-location
-      - run:
-          name: connect to db
-          command: |
-            docker-compose exec db psql -Upostgres
-      - run:
-          name: connect to postgresdb
-          command: |
-            \c postgres      
-      - run:
-          name: add table
-          command: |
-            CREATE TABLE learning_history(studentId INT NOT NULL,date timestamp,age INT,learninghours INT,cpuusage INT,cost  INT,courseId text,noOfmoudles INT,maxNoOfSubmission INT,batchId text );
-      - run:
-          name: add data
-          command: |
-            insert into learning_history( studentId ,date, age ,learninghours ,cpuusage ,cost ,courseId ,noOfmoudles ,maxNoOfSubmission ,batchId ) values (123,CURRENT_DATE,22,6,50,400,'SCIFI01',6,10,'PY101');
-            insert into learning_history( studentId ,date, age ,learninghours ,cpuusage ,cost ,courseId ,noOfmoudles ,maxNoOfSubmission ,batchId ) values (123,CURRENT_DATE,22,6,50,400,'SCIFI02',6,10,'PY101');
-            insert into learning_history( studentId ,date, age ,learninghours ,cpuusage ,cost ,courseId ,noOfmoudles ,maxNoOfSubmission ,batchId ) values (123,CURRENT_DATE,22,6,50,400,'SCIFI03',6,10,'PY101');
-            insert into learning_history( studentId ,date, age ,learninghours ,cpuusage ,cost ,courseId ,noOfmoudles ,maxNoOfSubmission ,batchId ) values (123,CURRENT_DATE,22,6,50,400,'SCIFI04',6,10,'PY101');
-      - run:
-          name: close db connection
-          command: |
-            ##############
-      - run:
-          name: start server
-          command: |
-            docker-compose up server
-      - run:
-          name: stop server
-          command: |
-            ###############
-            
+            sudo apt-get install git
+            git --version
