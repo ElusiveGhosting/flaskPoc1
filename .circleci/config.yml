@@ -9,3 +9,5 @@ jobs:
           name: Install linux support apps
           command: |
             sudo apt-get install make
+            sudo apt install docker.io
+            docker --version
