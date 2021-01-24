@@ -46,4 +46,12 @@ jobs:
       - add_ssh_key:
           fingerprints:
             - db:27:b9:a5:12:2a:ce:cd:50:22:8c:31:e3:12:2b:93
-      - run: ssh root@192.46.212.167 "echo 'hello'"   
+      - run: ssh root@192.46.212.167 "echo '"
+  workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
