@@ -8,7 +8,4 @@ jobs:
       - run:
           name: Install linux support apps
           command: |
-            sudo apt-get install docker
             sudo apt-get install make
-            sudo apt-get install git
-            git --version
