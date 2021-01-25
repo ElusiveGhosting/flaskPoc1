@@ -52,5 +52,5 @@ jobs:
           name: Deploy master.
           command: |
             ssh root@192.46.212.167 "cd flaskPoc1"
-            ssh root@192.46.212.167 "make server.start"
+            ssh root@192.46.212.167 "ls"
   
