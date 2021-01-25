@@ -39,12 +39,6 @@ jobs:
           name: install server
           command: |
             docker-compose run --rm server pip install -r requirements-dev.txt --user --upgrade --no-warn-script-location
-  deploy:
-     machine:
-      enabled: true
-      working_directory: ~/flaskPoc1
-    steps:
-      - checkout
       - run:
           name: Fix ssh Could not resolve hostname
           command: |
@@ -57,16 +51,4 @@ jobs:
       - run:
           name: Deploy master.
           command: ssh root@192.46.212.167 'cd flaskPoc1 && logout'
-
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - master
-      - deploy:
-          requires:
-            - build
+  
