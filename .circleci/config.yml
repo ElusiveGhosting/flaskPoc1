@@ -41,17 +41,32 @@ jobs:
             docker-compose run --rm server pip install -r requirements-dev.txt --user --upgrade --no-warn-script-location
   deploy:
      machine:
-       enabled: true
-     steps:
-      - add_ssh_key:
-        fingerprints:
-        - "db:27:b9:a5:12:2a:ce:cd:50:22:8c:31:e3:12:2b:93"
-      - run: ssh root@192.46.212.167 "echo 'hello'"
+      enabled: true
+    working_directory: ~/flaskPoc1
+    steps:
+      - checkout
+      - run:
+          name: Fix ssh Could not resolve hostname
+          command: |
+            ssh-keyscan -H 192.46.212.167 >> ~/.ssh/known_hosts
+
+      - add_ssh_keys: # add private SSH key from CircleCI account based on fingerprint.
+          fingerprints:
+            - "	db:27:b9:a5:12:2a:ce:cd:50:22:8c:31:e3:12:2b:93"
+
+      - run:
+          name: Deploy master.
+          command: ssh root@192.46.212.167 'cd flaskPoc1 && logout'
+
 workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only:
+                - master
       - deploy:
           requires:
             - build
