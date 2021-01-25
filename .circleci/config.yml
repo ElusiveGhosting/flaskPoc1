@@ -52,4 +52,5 @@ jobs:
           name: Deploy master.
           command: |
             ssh root@192.46.212.167 ls
+            ssh root@192.46.212.167 logout
   
