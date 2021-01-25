@@ -34,6 +34,7 @@ jobs:
           name: change dir and test
           command: |
             cd flaskPoc1
+            ls
             echo "hello from ubuntu"
       - run:
           name: install server
@@ -52,7 +53,7 @@ jobs:
           name: Deploy master.
           command: |
             ssh root@192.46.212.167 ls
-            ssh root@192.46.212.167 cd flaskPoc1
+            ssh root@192.46.212.167 cd ~/flaskPoc1
             ssh root@192.46.212.167 ls
   
   
