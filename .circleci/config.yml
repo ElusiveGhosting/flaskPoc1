@@ -42,7 +42,7 @@ jobs:
   deploy:
      machine:
       enabled: true
-    working_directory: ~/flaskPoc1
+      working_directory: ~/flaskPoc1
     steps:
       - checkout
       - run:
