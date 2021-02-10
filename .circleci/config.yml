@@ -41,9 +41,9 @@ jobs:
           command: |
             docker-compose run --rm server pip install -r requirements-dev.txt --user --upgrade --no-warn-script-location
       - run:
-          name: start server
+          name: test server
           command: |
-            docker-compose up server
+            docker-compose run --rm testserver
       - run:
           name: Fix ssh Could not resolve hostname
           command: |
