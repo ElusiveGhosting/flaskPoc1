@@ -1,5 +1,4 @@
 """
-"""
 Define the REST verbs relative to the learning history
 """
 
