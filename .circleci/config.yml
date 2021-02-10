@@ -41,6 +41,10 @@ jobs:
           command: |
             docker-compose run --rm server pip install -r requirements-dev.txt --user --upgrade --no-warn-script-location
       - run:
+          name: start server
+          command: |
+            make server.daemon
+      - run:
           name: Fix ssh Could not resolve hostname
           command: |
             ssh-keyscan -H 192.46.212.167 >> ~/.ssh/known_hosts
@@ -52,6 +56,19 @@ jobs:
       - run:
           name: Deploy master.
           command: |
-            ssh root@192.46.212.167 'ls && cd project && cd flaskPoc1 && git status &&  make server.start'
+            ssh root@192.46.212.167 'ls && cd project && cd flaskPoc1 && git status &&  make server.daemon'
+      - run:
+          name: Fix ssh Could not resolve hostname
+          command: |
+            ssh-keyscan -H 192.46.208.71 >> ~/.ssh/known_hosts
+
+      - add_ssh_keys: # add private SSH key from CircleCI account based on fingerprint.
+          fingerprints:
+            - "	c7:d5:ba:57:f1:c9:06:2b:33:01:fc:22:74:d2:4b:3c"
+
+      - run:
+          name: Deploy test.
+          command: |
+            ssh rohit1@192.46.208.71 'ls && cd adminportal && cd flaskPoc1 && git status &&  make server.daemon'
   
   
