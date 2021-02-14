@@ -56,7 +56,7 @@ jobs:
       - run:
           name: Deploy master.
           command: |
-            ssh root@192.46.212.167 'ls && cd project && cd flaskPoc1 && git status &&  make server.daemon'
+            ssh root@192.46.212.167 'ls && cd project && cd flaskPoc1 && git pull origin &&  make server.daemon'
       - run:
           name: Fix ssh Could not resolve hostname
           command: |
@@ -69,6 +69,6 @@ jobs:
       - run:
           name: Deploy test.
           command: |
-            ssh rohit1@192.46.208.71 'ls && cd adminportal && cd flaskPoc1 && git status &&  make server.daemon'
+            ssh rohit1@192.46.208.71 'ls && cd adminportal && cd flaskPoc1 && git pull origin &&  make server.daemon'
   
   
