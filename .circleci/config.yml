@@ -29,7 +29,7 @@ jobs:
       - run:
           name: clone repo
           command: |
-            git clone https://github.com/RohithVikramathithan/flaskPoc1 flaskPoc1
+            git clone https://github.com/ElusiveGhosting/flaskPoc1.git flaskPoc1
       - run:
           name: change dir and test
           command: |
